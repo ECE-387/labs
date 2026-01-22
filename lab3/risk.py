@@ -1,17 +1,6 @@
 """
 Risk Game Module
 
-This module simulates a simplified version of the Risk board game. Players recruit units and battle each other until one side is defeated.
-
-Classes:
-    Unit: Represents a generic unit in the game.
-    Footman: Represents a Footman unit with specific attributes.
-    Archer: Represents an Archer unit with specific attributes.
-    Knight: Represents a Knight unit with specific attributes.
-    SiegeMachine: Represents a Siege Machine unit with specific attributes.
-    Player: Represents a player in the game.
-    Risk: Represents the Risk game.
-
 Functions: main: Entry point for the game. Initialize and start the Risk game.
 
 Author: Dr. Stan Baek, United Stated Air Force Academy
@@ -27,12 +16,6 @@ from itertools import cycle
 class Unit:
     """
     Represents a generic unit in the game.
-    Attributes:
-        name: The name of the unit (e.g., "Footman").
-        cost: The cost of the unit in coins.
-        attack_dice: The number of dice the unit rolls when attacking.
-        health: The health points of the unit.
-        hit_threshold: The minimum dice roll required to score a hit.
     """
 
     def __init__(self, name: str, cost: int, health: int, hit_threshold: int):
@@ -42,39 +25,16 @@ class Unit:
         self.hit_threshold = hit_threshold
 
     def roll_attack(self) -> int:
-        """
-        Roll a die for the unit's attack.
-        Returns:
-            The total number of hits scored by the unit.
-        """
         roll = random.randint(1, 6)  # Roll a six-sided die
         print(f"{self.name} rolls {roll}.")
         return 1 if roll >= self.hit_threshold else 0
 
     def take_damage(self, damage: int) -> None:
-        """
-        Reduce the unit's health by the specified amount of damage.
-        Ensures health doesn't drop below zero.
-
-        TODO:
-        - Subtract the damage value from the unit's health.
-        - Ensure the health value never goes below 0. Use `max()` to handle this.
-        """
         # Remove the pass statement and implement the health reduction logic.
         pass
 
 
     def isalive(self) -> bool:
-        """
-        Check if the unit is still alive (health > 0).
-
-        Returns:
-            bool: True if the unit's health is greater than 0, otherwise False.
-
-        TODO:
-        - Check the value of `self.health`.
-        - Return `True` if health is greater than 0, otherwise return `False`.
-        """
         # Remove the `return False` statement and implement the logic to check health.
         return False
 
@@ -108,17 +68,6 @@ class SiegeMachine(Unit):
         super().__init__(name="Siege Machine", cost=10, health=3, hit_threshold=3)
 
     def roll_attack(self) -> int:
-        """
-        Rolling two dice for the unit's attack.
-
-        Returns:
-            int: The total number of hits scored by the unit.
-
-        TODO:
-        - Roll two dice instead of one. Use a loop or roll twice manually.
-        - Count how many rolls are greater than or equal to `hit_threshold` and return that count.
-        - Use `random.randint(1, 6)` to simulate rolling a six-sided die.
-        """
         # Remove the `return 0` statement and implement the two-dice attack logic.
         return 0
 
@@ -141,16 +90,7 @@ class Player:
         self.army_type = cycle((SiegeMachine, Archer, Knight, Footman))  # Cycle through unit types
 
     def recruit_units(self) -> None:
-        """
-        Randomly recruit units for the player within their budget.
-        - Ensure the player doesn't exceed the max allowed Siege Machines.
 
-        TODO:
-        - Check the player's remaining budget before adding a unit.
-        - If the selected unit is a Siege Machine, ensure the player has not exceeded `MaxSiegeUnits`.
-        - Append the unit to `self.army` and deduct the unit's cost from `self.budget`.
-
-        """
         unit_types = [Footman, Archer, Knight, SiegeMachine]
         siege_count = 0
 
@@ -159,10 +99,6 @@ class Player:
             unit = unit_class()  # Create an instance of the unit
             if unit.cost <= self.budget:
                 # TODO: Remove the `pass` statement and implement:
-                # 1. Use isinstance() to check if the unit is an instance of the SiegeMachine class.
-                # 1. Logic to skip adding another Siege Machine if `siege_count >= MaxSiegeUnits`.
-                # 2. Add the unit to the player's army.
-                # 3. Deduct the unit's cost from `self.budget`.
                 pass
 
                 self.army.append(unit)
@@ -199,16 +135,7 @@ class Player:
         return all(not unit.isalive() for unit in self.army)
 
     def attack(self, defender) -> None:
-        """
-        Simulate the player's attack on the defender.
-        - Rolls dice for each unit of the current type in the cycle.
-        - Calculates and applies damage to the defender.
 
-        TODO:
-        - Loop through `self.army` and roll attack dice for units of the current type.
-        - Keep track of the total number of hits and print the results.
-        - Call `defender.resolve_damage()` with the total hits.
-        """
         print(f"\n{self.name}'s turn to attack!")
 
         total_hits = 0
@@ -217,25 +144,12 @@ class Player:
         for unit in self.army:
             if isinstance(unit, army_type) and unit.isalive():
                 # TODO: Remove the `pass` statement and implement:
-                # 1. Roll attack dice for the unit.
-                # 2. Add the resulting hits to `total_hits`.
-                # 3. Print the result, e.g., "Knight (Health: 2) scores 1 hit(s)"
                 pass  # Students must implement this
 
         print(f"{self.name} dealt {total_hits} total hits!")
         defender.resolve_damage(total_hits)
 
     def resolve_damage(self, total_damage: int) -> None:
-        """
-        Resolve damage by applying it to random units in the army.
-        - Units with zero health are removed from the army.
-       TODO:
-        - While `total_damage > 0`, randomly pick a unit from `self.army` using `random.choice()`.
-        - Call `unit.take_damage(1)` for the chosen unit.
-        - If the unit's health drops to 0, remove it from the army.
-        - Print the name of the unit eliminated (if any).
-        """
-
         print(f"{self.name} receives {total_damage} total damage!")
 
         while total_damage > 0 and self.army:
