@@ -46,26 +46,26 @@ class Unit:
 # Subclasses for specific unit types
 class Footman(Unit):
     """Represents a Footman unit with specific attributes."""
-    def __init__(self, name: str):
-        super().__init__(name="Footman", cost=1, health=1, hit_threshold=5)
+    def __init__(self, name: str ="Footman"):
+        super().__init__(name=name, cost=1, health=1, hit_threshold=5)
 
 
 class Archer(Unit):
     """Represents an Archer unit with specific attributes."""
-    def __init__(self, name: str):
-        super().__init__(name="Archer", cost=2, health=1, hit_threshold=4)
+    def __init__(self, name: str ="Archer"):
+        super().__init__(name=name, cost=2, health=1, hit_threshold=4)
 
 
 class Knight(Unit):
     """Represents a Knight unit with specific attributes."""
-    def __init__(self, name: str):
-        super().__init__(name="Knight", cost=3, health=2, hit_threshold=3)
+    def __init__(self, name: str = "Knight"):
+        super().__init__(name=name, cost=3, health=2, hit_threshold=3)
 
 
 class SiegeMachine(Unit):
     """Represents a Siege Machine unit with specific attributes."""
-    def __init__(self, name: str):
-        super().__init__(name="Siege Machine", cost=10, health=3, hit_threshold=3)
+    def __init__(self, name: str = "Siege Machine"):
+        super().__init__(name=name, cost=10, health=3, hit_threshold=3)
 
     def roll_attack(self) -> int:
         # Remove the `return 0` statement and implement the two-dice attack logic.
@@ -239,11 +239,12 @@ def main():
     print("     Welcome to Risk!    ")
     print("=======================\n")
 
+    # TODO: Change the player's name
     game = Risk("Dr. Baek, the legendary pirate captain")
     game.play()
 
 
 # Run the game
 if __name__ == "__main__":
-    #main()
-    test()
+    main()
+    #test()
